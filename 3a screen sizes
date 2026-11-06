@@ -1,0 +1,154 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}	
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+ 
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Responsive UI',
+      theme: ThemeData(
+      primarySwatch: Colors.blue,  
+        ),
+      home: ResponsiveHomePage(),
+    );
+  }
+}
+
+class ResponsiveHomePage extends StatelessWidget {
+  const ResponsiveHomePage({super.key});
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title:const Text('Responsive UI Design') ,
+      ),
+      body: LayoutBuilder(
+        builder:(context,constraints){
+          if(constraints.maxWidth>1200){
+            return DesktopLayout();
+          }else if(constraints.maxWidth>1200 && constraints.maxWidth>1200){
+            return TabletLayout();
+          }else{
+            return MobileLayout();
+          }
+          },
+        ),
+        bottomNavigationBar: Footer(),
+    );
+  }
+}
+
+class MobileLayout extends StatelessWidget {
+  const MobileLayout({super.key});
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Header(),
+        Expanded(child: CardGridView(crossAxisCount: 2)),
+      ],
+    );
+  }
+}
+class TabletLayout extends StatelessWidget {
+  const TabletLayout({super.key});
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Header(),
+        Expanded(child: CardGridView(crossAxisCount: 3)),
+      ],
+    );
+  }
+}
+class DesktopLayout extends StatelessWidget {
+  const DesktopLayout({super.key});
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Header(),
+        Expanded(child: CardGridView(crossAxisCount: 4)),
+      ],
+    );
+  }
+}
+class Header extends StatelessWidget {
+  const Header({super.key});
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      color: Colors.blue,
+      child: const Center(
+        child: Text(
+          'Welcome to Responsive UI',
+          style: TextStyle(fontSize: 24,color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+class CardGridView extends StatelessWidget{
+  final int crossAxisCount;
+  const CardGridView({super.key, required this.crossAxisCount});
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: crossAxisCount,
+       crossAxisSpacing:10.0,
+       mainAxisSpacing:10.0,
+       ),
+       padding:const EdgeInsets.all(10.0),
+       itemCount:10,
+       itemBuilder:(context,index){
+        return Card(
+          color: Colors.blueAccent,
+          child:Center(
+            child: Text(
+              'Card $index',
+              style: const TextStyle(fontSize: 18,color: Colors.white),
+            ),
+          ),
+        );
+       },
+       );
+  }
+
+}
+class Footer extends StatelessWidget {
+  const Footer({super.key});
+
+  
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      color: Colors.blue,
+      child: const Center(
+        child: Text(
+          'Welcome to Kits college.',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
